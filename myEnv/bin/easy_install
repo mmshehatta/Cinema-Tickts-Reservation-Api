@@ -1,0 +1,10 @@
+#!/bin/sh
+'''exec' "/media/mahmoud/Mon3at3(100_GB)/From-Desktop/01 Back-End/01 Django-Projects/15_Django API/Cinema-Tickts-Reservation-Api/myEnv/bin/python3.8" "$0" "$@"
+' '''
+# -*- coding: utf-8 -*-
+import re
+import sys
+from setuptools.command.easy_install import main
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(main())
