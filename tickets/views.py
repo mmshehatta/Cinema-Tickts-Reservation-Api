@@ -196,9 +196,15 @@ class viewset_guest(viewsets.ModelViewSet):
 
 
 
-# class viewset_movie(viewsets.ModelViewSet):
-#     queryset = Guest.objects.all()
-#     serializer_class = GuestSerialzer
+class viewset_movie(viewsets.ModelViewSet):
+    queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
+
+class viewset_reservation(viewsets.ModelViewSet):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializers
+
+
 
 
 

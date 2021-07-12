@@ -7,6 +7,8 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register("guests" , views.viewset_guest)
+router.register("movies" , views.viewset_movie)
+router.register("reservs" , views.viewset_reservation)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,7 +43,7 @@ urlpatterns = [
     path('rest/generics/<int:pk>' ,views.generics_pk.as_view()),
     
     # method 7 :rest framework by viewsets
-    path('rest/viewset/' , include(router.urls))
+    path('rest/viewset/' , include(router.urls)),
 
 
 
