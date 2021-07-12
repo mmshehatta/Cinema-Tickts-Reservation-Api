@@ -13,7 +13,7 @@ from tickets.models import Guest
 
 from .serializers import *
 
-from rest_framework import mixins, generics
+from rest_framework import mixins, generics, viewsets
 
 # Create your views here.
 
@@ -136,7 +136,7 @@ class CBV_pk(APIView):
             return Response(serializer.data)
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
-    # DELETE:
+    # DELETE:generics
     def delete(self, request, pk):
         guest = self.get_object(pk)
         guest.delete()
@@ -175,4 +175,31 @@ class mixins_pk(mixins.RetrieveModelMixin , mixins.UpdateModelMixin,mixins.Destr
 
     #DELETE: 
     def delete(self , request , pk):
-        return self.destroy(request)
+        return self.destroy(request) 
+
+
+#  Method 6: generics
+#  6.1 list and create ==> GET and POST:
+class generics_list(generics.ListCreateAPIView):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerialzer
+
+#  6.1 get_pk and update_pk and delete_pk ==> GET PUT DELETE:
+class generics_pk(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerialzer
+
+#  Method 7: viewsets
+class viewset_guest(viewsets.ModelViewSet):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerialzer
+
+
+
+# class viewset_movie(viewsets.ModelViewSet):
+#     queryset = Guest.objects.all()
+#     serializer_class = GuestSerialzer
+
+
+
+
