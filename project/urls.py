@@ -44,6 +44,15 @@ urlpatterns = [
     
     # method 7 :rest framework by viewsets
     path('rest/viewset/' , include(router.urls)),
+    
+    
+    # some business logics
+    # search for movie by hall or name
+    path('fbv/findmovie' , views.find_movie),
+
+    # add new Reservation:
+    path('fbv/newres' , views.new_reserv),
+
 
 
 

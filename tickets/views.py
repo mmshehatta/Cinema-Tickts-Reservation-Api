@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from icecream import ic
+from rest_framework.serializers import Serializer
 from rest_framework.views import APIView
 
 
@@ -202,7 +203,44 @@ class viewset_movie(viewsets.ModelViewSet):
 
 class viewset_reservation(viewsets.ModelViewSet):
     queryset = Reservation.objects.all()
-    serializer_class = ReservationSerializers
+    serializer_class = ReservationSerializer
+
+
+# implementing fing movie functions
+# we will use FBV because it is suitable for our business logic
+@api_view(['GET'])
+def find_movie(request):
+    movies = Movie.objects.filter(
+        hall = request.data['hall'],
+        # movie = request.data['movie']   
+    )
+    serializer = MovieSerializer(movies , many=True)
+    return Response(serializer.data)
+
+
+
+@api_view(['POST'])
+def new_reserv(request):
+    movie = Movie.objects.get(
+        # hall = request.data['hall'],
+        movie = request.data['movie'],
+    )
+
+    new_guest = Guest()
+    new_guest.name = request.data['name']
+    new_guest.mobile = request.data['mobile']
+    serializer_new_movie = GuestSerialzer(data=new_guest)
+    if serializer_new_movie.is_valid():
+        serializer_new_movie.save()
+
+    new_reservation = Reservation()
+    new_reservation.guest = new_guest
+    new_reservation.movie = movie
+    new_reservation_serializer = ReservationSerializer(data=new_reservation)
+    if new_reservation_serializer.is_valid():
+        new_reservation_serializer.save()
+        return Response(status = status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 
