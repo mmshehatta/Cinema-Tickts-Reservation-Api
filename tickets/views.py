@@ -143,36 +143,36 @@ class CBV_pk(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-# #  Method 5: mixins
-# #  5.1 mixins list:
+#  Method 5: mixins
+#  5.1 mixins list:
 
-# class mixin_list(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
-#     queryset = Guest.objects.all()
-#     serializer_class = GuestSerialzer
+class mixin_list(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerialzer
 
-#     #Get All objects:
-#     def get(self , request):
-#         return self.list(request)
+    #Get All objects:
+    def get(self , request):
+        return self.list(request)
     
-#     #Create new object:
-#     def post(self , request):
-#         return self.create(request)
+    #Create new object:
+    def post(self , request):
+        return self.create(request)
 
-# #  Method 5: mixins
-# #  5.2 mixins GET PUT DELETE:
+#  Method 5: mixins
+#  5.2 mixins GET PUT DELETE:
 
-# class mixins_pk(mixins.RetrieveModelMixin , mixins.UpdateModelMixin,mixins.DestroyModelMixin , generics.GenericAPIView):
-#     queryset = Guest.objects.all()
-#     serializer_class = GuestSerialzer()
+class mixins_pk(mixins.RetrieveModelMixin , mixins.UpdateModelMixin,mixins.DestroyModelMixin , generics.GenericAPIView):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerialzer()
     
-#     #GET: 
-#     def get(self , request , pk):
-#         return self.retrieve(request)
+    #GET: 
+    def get(self , request , pk):
+        return self.retrieve(request)
 
-#     #PUT: 
-#     def put(self , request , pk):
-#         return self.update(request)
+    #PUT: 
+    def put(self , request , pk):
+        return self.update(request)
 
-#     #DELETE: 
-#     def delete(self , request , pk):
-#         return self.destroy(request)
+    #DELETE: 
+    def delete(self , request , pk):
+        return self.destroy(request)
