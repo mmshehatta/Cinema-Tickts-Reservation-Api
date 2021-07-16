@@ -8,7 +8,10 @@ from rest_framework.response import Response
 from icecream import ic
 from rest_framework.serializers import Serializer
 from rest_framework.views import APIView
+from rest_framework.authentication import BaseAuthentication, BasicAuthentication , TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
+from .permissions import IsAuthorOrReadOnly
 
 from tickets.models import Guest
 
@@ -184,11 +187,15 @@ class mixins_pk(mixins.RetrieveModelMixin , mixins.UpdateModelMixin,mixins.Destr
 class generics_list(generics.ListCreateAPIView):
     queryset = Guest.objects.all()
     serializer_class = GuestSerialzer
+    authentication_classes=[TokenAuthentication]
+    # permission_classes=[IsAuthenticated]
 
 #  6.1 get_pk and update_pk and delete_pk ==> GET PUT DELETE:
 class generics_pk(generics.RetrieveUpdateDestroyAPIView):
     queryset = Guest.objects.all()
     serializer_class = GuestSerialzer
+    # authentication_classes=[BasicAuthentication]
+
 
 #  Method 7: viewsets
 class viewset_guest(viewsets.ModelViewSet):
@@ -242,6 +249,21 @@ def new_reserv(request):
         return Response(status = status.HTTP_201_CREATED)
     return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+
+# Post views to test custome permissions:
+# post list and create
+class Post_list(generics.ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes=[IsAuthorOrReadOnly]
+
+
+# post GET PUT DELET
+class Post_pk(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes=[IsAuthorOrReadOnly]
 
 
 

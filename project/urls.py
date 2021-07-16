@@ -1,8 +1,10 @@
 
 from django.contrib import admin
 from django.urls import path , include
+# import rest_framework
 from tickets import views
 from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken.views import obtain_auth_token
 
 
 router = DefaultRouter()
@@ -52,6 +54,20 @@ urlpatterns = [
 
     # add new Reservation:
     path('fbv/newres' , views.new_reserv),
+
+    # adding rest-urls to enable login and logout in the ui
+    path('api-auth/' , include('rest_framework.urls')),
+
+    # token auth:
+    path('api-token-auth' , obtain_auth_token),
+    
+    
+    # GET and POST from rest framework by Generics
+    path('rest/post/generics/' ,views.Post_list.as_view()),
+
+    # GET PUT DELETE from rest framework by Generics
+    path('rest/post/generics/<int:pk>' ,views.Post_pk.as_view()),
+
 
 
 
